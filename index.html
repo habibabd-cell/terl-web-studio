@@ -1,0 +1,2958 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TERL Web Studio — Build Your Digital Presence.</title>
+<meta name="description" content="TERL Web Studio membangun website berkelas, design-first, mobile-first, dan conversion-focused untuk Personal Brand, UMKM, dan Perusahaan.">
+<meta name="theme-color" content="#0a0a0a">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ==========================================================================
+     CSS VARIABLES & ROOT CONFIG
+     ========================================================================== */
+  :root {
+    --black: #080808;
+    --near-black: #121214;
+    --card-dark: #17171a;
+    --card-dark-hover: #202024;
+    --white: #ffffff;
+    --off-white: #f8f8f6;
+    --yellow: #ffd400;
+    --yellow-hover: #ffe033;
+    --yellow-soft: rgba(255, 212, 0, 0.12);
+    --yellow-glow: rgba(255, 212, 0, 0.35);
+    --gray-900: #1a1a1a;
+    --gray-700: #4a4a4a;
+    --gray-600: #6b6b6b;
+    --gray-400: #9e9e9a;
+    --gray-300: #d4d4cf;
+    --gray-200: #e8e8e3;
+    --border: #e2e2dc;
+    --border-dark: #26262a;
+    --max-w: 1200px;
+    --radius-sm: 4px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+    --radius-full: 9999px;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --shadow-subtle: 0 4px 20px rgba(0,0,0,0.04);
+    --shadow-card: 0 12px 36px rgba(0,0,0,0.06);
+    --shadow-elevated: 0 20px 48px rgba(0,0,0,0.12);
+    --shadow-glow: 0 0 35px var(--yellow-glow);
+  }
+
+  /* Reset & Core Setup */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
+    selection-background-color: var(--yellow);
+    selection-color: var(--black);
+  }
+
+  ::selection {
+    background: var(--yellow);
+    color: var(--black);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  ul { list-style: none; }
+  img { max-width: 100%; display: block; height: auto; }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    outline: none;
+  }
+
+  .wrap {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 28px;
+    position: relative;
+  }
+
+  /* Global Typography */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 6px 14px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    width: fit-content;
+    transition: transform 0.25s var(--ease-out-expo), border-color 0.25s ease;
+  }
+  .eyebrow:hover {
+    border-color: var(--yellow);
+    transform: translateY(-1px);
+  }
+  .eyebrow .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--yellow);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .eyebrow .pulse-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid var(--yellow);
+    opacity: 0.8;
+    animation: radar-pulse 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+
+  @keyframes radar-pulse {
+    0% { transform: scale(0.6); opacity: 1; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+
+  :focus-visible {
+    outline: 2.5px solid var(--yellow);
+    outline-offset: 3px;
+  }
+
+  /* ==========================================================================
+     READING SCROLL PROGRESS BAR
+     ========================================================================== */
+  #scrollProgressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--black), var(--yellow));
+    z-index: 1000;
+    width: 0%;
+    transition: width 0.05s ease-out;
+  }
+
+  /* ==========================================================================
+     NAVIGATION BAR
+     ========================================================================== */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: all 0.35s var(--ease-out-expo);
+  }
+  .nav.scrolled {
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom-color: var(--border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    padding: 2px 0;
+  }
+  .nav-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: padding 0.3s ease;
+  }
+  .nav.scrolled .nav-inner {
+    padding: 12px 28px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    color: var(--black);
+    position: relative;
+  }
+  .logo-box {
+    width: 32px;
+    height: 32px;
+    background: var(--black);
+    color: var(--yellow);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    transition: transform 0.3s var(--ease-elastic);
+  }
+  .logo:hover .logo-box {
+    transform: rotate(8deg) scale(1.08);
+    background: var(--yellow);
+    color: var(--black);
+  }
+  .logo-text {
+    display: flex;
+    align-items: baseline;
+  }
+  .logo-text .dot {
+    color: var(--yellow);
+    font-size: 26px;
+    line-height: 0;
+    margin-left: 1px;
+    animation: blink-dot 3s ease-in-out infinite;
+  }
+  @keyframes blink-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--gray-700);
+    margin-left: 20px;
+  }
+  .nav-status .status-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #10b981;
+    animation: pulse-green 2s infinite;
+  }
+  @keyframes pulse-green {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  .nav-center {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-700);
+    position: relative;
+    padding: 6px 0;
+    transition: color 0.25s ease;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--black);
+  }
+  .nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--yellow);
+    transition: width 0.25s var(--ease-out-expo);
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .nav-cta {
+    background: var(--black);
+    color: var(--white);
+    padding: 9px 20px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s var(--ease-out-expo);
+    border: 1.5px solid var(--black);
+  }
+  .nav-cta::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+  }
+  .nav-cta:hover::before {
+    left: 100%;
+  }
+  .nav-cta:hover {
+    background: var(--yellow);
+    border-color: var(--yellow);
+    color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--yellow-glow);
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    transition: background 0.2s ease;
+  }
+  .nav-toggle span {
+    width: 100%;
+    height: 2px;
+    background: var(--black);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .nav-toggle.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 68px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--white);
+    z-index: 190;
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: all 0.35s var(--ease-out-expo);
+  }
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .mobile-menu-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mobile-menu a.mobile-link {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 600;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .mobile-menu a.mobile-link span.arrow {
+    color: var(--yellow);
+    font-family: var(--font-mono);
+  }
+  .mobile-footer {
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ==========================================================================
+     HERO SECTION
+     ========================================================================== */
+  .hero {
+    padding: 170px 0 110px;
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(255, 212, 0, 0.12) 0%, transparent 45%),
+      radial-gradient(circle at 10% 80%, rgba(0, 0, 0, 0.03) 0%, transparent 40%),
+      linear-gradient(var(--off-white) 1.2px, transparent 1.2px),
+      linear-gradient(90deg, var(--off-white) 1.2px, transparent 1.2px);
+    background-size: 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+    background-position: center top;
+  }
+
+  /* Ambient floating aura */
+  .hero-glow-orb {
+    position: absolute;
+    width: 480px;
+    height: 480px;
+    top: 10%;
+    right: 5%;
+    background: radial-gradient(circle, rgba(255,212,0,0.18) 0%, rgba(255,212,0,0) 70%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 0;
+    animation: float-glow 8s ease-in-out infinite alternate;
+  }
+  @keyframes float-glow {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-30px, 40px) scale(1.15); }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .live-time-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-600);
+    background: rgba(0,0,0,0.04);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 6.8vw, 86px);
+    font-weight: 700;
+    line-height: 0.98;
+    max-width: 960px;
+    letter-spacing: -0.04em;
+  }
+  .hero h1 .word-line {
+    display: block;
+    overflow: hidden;
+  }
+  .hero h1 .word-reveal {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    animation: hero-word-up 0.9s var(--ease-out-expo) forwards;
+  }
+  .hero h1 .word-reveal:nth-child(1) { animation-delay: 0.1s; }
+  .hero h1 .word-reveal:nth-child(2) { animation-delay: 0.25s; }
+
+  @keyframes hero-word-up {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .hero h1 .accent {
+    color: var(--black);
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .hero h1 .accent::after {
+    content: "";
+    position: absolute;
+    left: -4px;
+    right: -6px;
+    bottom: 0.08em;
+    height: 0.32em;
+    background: var(--yellow);
+    z-index: -1;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: marker-draw 0.8s 0.7s var(--ease-out-expo) forwards;
+  }
+  @keyframes marker-draw {
+    to { transform: scaleX(1); }
+  }
+
+  .hero-sub {
+    margin-top: 30px;
+    font-size: clamp(17px, 1.8vw, 20px);
+    color: var(--gray-600);
+    max-width: 620px;
+    line-height: 1.65;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fade-slide-up 0.8s 0.4s var(--ease-out-expo) forwards;
+  }
+
+  .hero-actions {
+    margin-top: 42px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: fade-slide-up 0.8s 0.55s var(--ease-out-expo) forwards;
+  }
+
+  @keyframes fade-slide-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* BUTTON STYLES */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn .icon {
+    display: inline-flex;
+    transition: transform 0.25s var(--ease-elastic);
+  }
+  .btn:hover .icon {
+    transform: translateX(4px);
+  }
+
+  .btn-primary {
+    background: var(--black);
+    color: var(--white);
+    border: 2px solid var(--black);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  }
+  .btn-primary:hover {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px var(--yellow-glow);
+  }
+  .btn-primary:active {
+    transform: translateY(-1px) scale(0.98);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--black);
+    border: 2px solid var(--black);
+  }
+  .btn-outline:hover {
+    background: var(--black);
+    color: var(--white);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  }
+
+  .hero-meta {
+    margin-top: 90px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    gap: 28px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fade-slide-up 0.8s 0.7s var(--ease-out-expo) forwards;
+  }
+  .hero-meta-item {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--gray-600);
+    letter-spacing: 0.02em;
+    position: relative;
+    padding-left: 14px;
+    border-left: 2px solid var(--yellow);
+    transition: transform 0.25s ease;
+  }
+  .hero-meta-item:hover {
+    transform: translateX(4px);
+  }
+  .hero-meta strong {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.4vw, 30px);
+    color: var(--black);
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .hero-meta strong span.counter {
+    display: inline-block;
+  }
+
+  /* ==========================================================================
+     DUAL MARQUEE STRIPS
+     ========================================================================== */
+  .equation {
+    background: var(--black);
+    color: var(--white);
+    padding: 38px 0;
+    overflow: hidden;
+    position: relative;
+    border-top: 1px solid #1f1f23;
+    border-bottom: 1px solid #1f1f23;
+  }
+  .marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    white-space: nowrap;
+    width: max-content;
+    animation: marquee-forward 32s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes marquee-forward {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 3vw, 32px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .marquee-item .arrow {
+    color: var(--yellow);
+    font-family: var(--font-mono);
+    font-weight: 400;
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+  .marquee-item:hover .arrow {
+    transform: scale(1.2) translateX(4px);
+  }
+  .marquee-item .dim { color: #4a4a50; }
+
+  /* Tech Stack Ticker */
+  .tech-ticker {
+    background: #0f0f12;
+    color: #a0a0a8;
+    padding: 16px 0;
+    overflow: hidden;
+    border-bottom: 1px solid #1e1e24;
+  }
+  .tech-track {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    white-space: nowrap;
+    width: max-content;
+    animation: marquee-reverse 28s linear infinite;
+  }
+  @keyframes marquee-reverse {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+  .tech-badge {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tech-badge:hover {
+    color: var(--yellow);
+    border-color: var(--yellow);
+  }
+
+  /* ==========================================================================
+     SECTION BASE STYLES
+     ========================================================================== */
+  section {
+    padding: 130px 0;
+    position: relative;
+  }
+  .section-head {
+    max-width: 680px;
+    margin-bottom: 64px;
+    position: relative;
+  }
+  .section-head h2 {
+    font-size: clamp(32px, 4.2vw, 50px);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+  }
+  .section-head p {
+    margin-top: 18px;
+    font-size: 17px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  /* ==========================================================================
+     SERVICES / SEGMENTS (INTERACTIVE 3D TILT CARDS)
+     ========================================================================== */
+  .segments {
+    background: var(--off-white);
+  }
+  .segment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .segment-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 44px 34px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.35s var(--ease-out-expo), border-color 0.35s ease, box-shadow 0.35s ease;
+    transform-style: preserve-3d;
+  }
+  .segment-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--yellow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .segment-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--yellow);
+    box-shadow: var(--shadow-card), 0 0 20px var(--yellow-soft);
+  }
+  .segment-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .segment-icon-box {
+    width: 48px;
+    height: 48px;
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 24px;
+    transition: background 0.3s ease, transform 0.3s var(--ease-elastic);
+  }
+  .segment-card:hover .segment-icon-box {
+    background: var(--yellow);
+    transform: scale(1.1) rotate(4deg);
+  }
+
+  .segment-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    margin-bottom: 12px;
+  }
+  .segment-card h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .segment-card p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.65;
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+  .segment-deliverables {
+    margin-bottom: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .segment-deliverables li {
+    font-size: 13.5px;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .segment-deliverables li svg {
+    color: var(--yellow);
+    flex-shrink: 0;
+  }
+  .segment-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--black);
+    color: var(--white);
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    width: fit-content;
+    transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  }
+  .segment-card:hover .segment-tag {
+    background: var(--yellow);
+    color: var(--black);
+    transform: translateX(4px);
+  }
+
+  /* ==========================================================================
+     PORTFOLIO / SHOWCASE SECTION
+     ========================================================================== */
+  .portfolio {
+    background: var(--white);
+  }
+  .portfolio-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    background: var(--off-white);
+    border: 1px solid var(--border);
+    color: var(--gray-700);
+    transition: all 0.2s ease;
+  }
+  .filter-btn:hover {
+    border-color: var(--black);
+    color: var(--black);
+  }
+  .filter-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .work-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--white);
+    transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .work-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--black);
+  }
+
+  .work-preview {
+    position: relative;
+    height: 220px;
+    background: #eef0f3;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Interactive Mockup Visual */
+  .browser-frame {
+    width: 88%;
+    height: 85%;
+    background: var(--white);
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+  .work-card:hover .browser-frame {
+    transform: scale(1.04) translateY(-3px);
+  }
+  .browser-dots {
+    display: flex;
+    gap: 5px;
+    padding: 8px 12px;
+    background: #f0f0ee;
+    border-bottom: 1px solid #e0e0db;
+  }
+  .browser-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cfcfc8;
+  }
+  .browser-dot:nth-child(1) { background: #ff5f56; }
+  .browser-dot:nth-child(2) { background: #ffbd2e; }
+  .browser-dot:nth-child(3) { background: #27c93f; }
+
+  .browser-content {
+    flex-grow: 1;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    background: var(--white);
+  }
+  .mock-header {
+    height: 12px;
+    width: 60%;
+    background: var(--black);
+    border-radius: 2px;
+  }
+  .mock-text {
+    height: 8px;
+    width: 90%;
+    background: #eaeaea;
+    border-radius: 2px;
+  }
+  .mock-cta {
+    height: 14px;
+    width: 35%;
+    background: var(--yellow);
+    border-radius: 2px;
+    margin-top: auto;
+  }
+  .mock-badge-tag {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--black);
+    color: var(--white);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .work-info {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .work-category {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .work-info h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .work-info p {
+    font-size: 13.5px;
+    color: var(--gray-600);
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .work-metrics {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .work-metrics .metric-val {
+    color: #059669;
+    font-weight: 600;
+  }
+
+  /* ==========================================================================
+     PRICING SECTION
+     ========================================================================== */
+  .pricing {
+    background: var(--white);
+    position: relative;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    align-items: stretch;
+  }
+
+  .price-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: var(--white);
+    transition: all 0.35s var(--ease-out-expo);
+  }
+  .price-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-card);
+    border-color: var(--black);
+  }
+
+  .price-card.featured {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.22);
+    transform: scale(1.02);
+  }
+  .price-card.featured:hover {
+    transform: scale(1.02) translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+
+  .price-badge {
+    position: absolute;
+    top: -14px;
+    right: 28px;
+    background: var(--yellow);
+    color: var(--black);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    box-shadow: 0 4px 12px var(--yellow-glow);
+    animation: badge-bounce 3s infinite;
+  }
+  @keyframes badge-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  .price-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 12px;
+  }
+  .price-card.featured .price-name { color: #a1a1aa; }
+
+  .price-card h3 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .price-amount-wrapper {
+    margin: 20px 0 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-card.featured .price-amount-wrapper {
+    border-bottom-color: #27272a;
+  }
+
+  .price-amount {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 3.8vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .price-amount small {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-600);
+    font-family: var(--font-mono);
+  }
+  .price-card.featured .price-amount small { color: #a1a1aa; }
+
+  .price-features {
+    flex-grow: 1;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .price-features li {
+    font-size: 14.5px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.5;
+  }
+  .price-features li .check-icon {
+    width: 18px;
+    height: 18px;
+    background: var(--yellow-soft);
+    color: var(--black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .price-card.featured .price-features li .check-icon {
+    background: var(--yellow);
+    color: var(--black);
+  }
+
+  .price-cta {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: var(--radius-sm);
+    background: var(--black);
+    color: var(--white);
+    transition: all 0.25s var(--ease-out-expo);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .price-card.featured .price-cta {
+    background: var(--yellow);
+    color: var(--black);
+  }
+  .price-cta:hover {
+    background: var(--yellow);
+    color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px var(--yellow-glow);
+  }
+  .price-card.featured .price-cta:hover {
+    background: var(--white);
+    color: var(--black);
+    box-shadow: 0 8px 20px rgba(255,255,255,0.25);
+  }
+
+  /* ==========================================================================
+     WHY / VALUE PROPOSITION
+     ========================================================================== */
+  .why {
+    background: var(--off-white);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .why-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 34px 24px;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease-out-expo), border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .why-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--black);
+    box-shadow: var(--shadow-card);
+  }
+
+  .why-mark {
+    width: 38px;
+    height: 38px;
+    background: var(--yellow);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.3s var(--ease-elastic);
+  }
+  .why-card:hover .why-mark {
+    transform: scale(1.15) rotate(-6deg);
+  }
+
+  .why-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .why-card p {
+    font-size: 13.5px;
+    color: var(--gray-600);
+    line-height: 1.6;
+  }
+
+  /* ==========================================================================
+     PROCESS
+     ========================================================================== */
+  .process {
+    background: var(--white);
+  }
+  .process-list {
+    border-top: 1.5px solid var(--border);
+  }
+  .process-item {
+    display: grid;
+    grid-template-columns: 80px 1.2fr 1.6fr;
+    gap: 36px;
+    padding: 36px 0;
+    border-bottom: 1.5px solid var(--border);
+    align-items: baseline;
+    position: relative;
+    transition: background 0.3s ease, transform 0.3s ease, padding 0.3s ease;
+    cursor: default;
+  }
+  .process-item::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--yellow);
+    opacity: 0;
+    transform: scaleY(0);
+    transition: all 0.3s ease;
+  }
+  .process-item:hover {
+    padding-left: 20px;
+    background: rgba(0,0,0,0.015);
+  }
+  .process-item:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  .process-num {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gray-400);
+    transition: color 0.3s ease;
+  }
+  .process-item:hover .process-num {
+    color: var(--black);
+    font-weight: 700;
+  }
+  .process-item h3 {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .process-item p {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.65;
+  }
+
+  /* ==========================================================================
+     TESTIMONIALS
+     ========================================================================== */
+  .testimonials {
+    background: var(--off-white);
+  }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .testimonial-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 36px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--black);
+    box-shadow: var(--shadow-card);
+  }
+  .testimonial-stars {
+    color: var(--yellow);
+    font-size: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 3px;
+  }
+  .testimonial-quote {
+    font-size: 15px;
+    color: var(--gray-700);
+    line-height: 1.65;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testimonial-client {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .client-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--black);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-family: var(--font-display);
+  }
+  .client-meta h4 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .client-meta span {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--gray-600);
+  }
+
+  /* ==========================================================================
+     CARE BAND
+     ========================================================================== */
+  .care {
+    background: var(--black);
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .care-glow {
+    position: absolute;
+    top: -150px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 212, 0, 0.15) 0%, transparent 65%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+  .care-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 68px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .care h2 {
+    font-size: clamp(30px, 3.8vw, 44px);
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.12;
+  }
+  .care p {
+    color: #a8a8a8;
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+  }
+  .care-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 24px;
+  }
+  .care-list li {
+    font-size: 14.5px;
+    padding: 10px 0;
+    border-top: 1px solid #27272a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e4e4e7;
+    transition: transform 0.2s ease;
+  }
+  .care-list li:hover {
+    transform: translateX(4px);
+    color: var(--white);
+  }
+  .care-list li::before {
+    content: "→";
+    color: var(--yellow);
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .care-price {
+    border: 1.5px solid #2e2e34;
+    border-radius: var(--radius-md);
+    padding: 40px 36px;
+    background: #111114;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .care-price:hover {
+    transform: translateY(-5px);
+    border-color: var(--yellow);
+  }
+  .care-price .price-name { color: #888890; }
+  .care-price .price-amount { color: var(--white); }
+  .care-price .price-amount small { color: #888890; }
+
+  /* ==========================================================================
+     FAQ SECTION
+     ========================================================================== */
+  .faq {
+    background: var(--white);
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 840px;
+  }
+  .faq-item {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+  }
+  .faq-item.active {
+    border-color: var(--black);
+    box-shadow: var(--shadow-subtle);
+  }
+  .faq-question {
+    width: 100%;
+    padding: 24px 28px;
+    text-align: left;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    background: transparent;
+  }
+  .faq-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--off-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: transform 0.3s var(--ease-out-expo), background 0.25s ease;
+  }
+  .faq-item.active .faq-icon {
+    transform: rotate(45deg);
+    background: var(--yellow);
+  }
+  .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s var(--ease-out-expo);
+  }
+  .faq-item.active .faq-answer {
+    grid-template-rows: 1fr;
+  }
+  .faq-answer-inner {
+    overflow: hidden;
+    padding: 0 28px 24px 28px;
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.7;
+  }
+
+  /* ==========================================================================
+     AUDIT / CONTACT
+     ========================================================================== */
+  .audit {
+    background: var(--off-white);
+  }
+  .audit-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 68px;
+  }
+  .audit-copy p {
+    font-size: 16.5px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    margin-top: 18px;
+    margin-bottom: 32px;
+  }
+  .audit-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .audit-step-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 15px;
+    background: var(--white);
+    padding: 16px 20px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .audit-step-item:hover {
+    transform: translateX(4px);
+    border-color: var(--black);
+  }
+  .audit-step-item span.step-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--yellow);
+    color: var(--black);
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .audit-form-container {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px;
+    box-shadow: var(--shadow-card);
+    position: relative;
+  }
+  .audit-form-container h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .field {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .field label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 15px;
+    background: var(--white);
+    border-radius: var(--radius-sm);
+    transition: all 0.25s ease;
+    color: var(--black);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--black);
+    outline: none;
+    box-shadow: 0 0 0 4px var(--yellow-soft);
+  }
+  .audit-form-container .btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 18px;
+    font-size: 15.5px;
+  }
+  .form-note {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin-top: 16px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* ==========================================================================
+     FOOTER
+     ========================================================================== */
+  footer {
+    background: var(--black);
+    color: var(--white);
+    padding: 90px 0 36px;
+    position: relative;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 52px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid #222226;
+  }
+  .footer-brand .logo {
+    color: var(--white);
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+  .footer-brand p {
+    font-size: 14.5px;
+    color: #9c9ca4;
+    max-width: 300px;
+    line-height: 1.65;
+  }
+  .footer-col h4 {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7b7b84;
+    margin-bottom: 20px;
+  }
+  .footer-col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .footer-col a {
+    font-size: 14.5px;
+    color: #c4c4cc;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-col a:hover {
+    color: var(--yellow);
+    transform: translateX(4px);
+  }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 13.5px;
+    color: #71717a;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ==========================================================================
+     FLOATING CONTROLS
+     ========================================================================== */
+  .floating-controls {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 300;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+
+  .wa-bubble-popup {
+    background: var(--white);
+    color: var(--black);
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.35s var(--ease-out-expo);
+    pointer-events: none;
+  }
+  .wa-bubble-popup.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .wa-bubble-popup .status-dot {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+  }
+
+  .wa-float {
+    background: var(--yellow);
+    color: var(--black);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 26px var(--yellow-glow), 0 4px 12px rgba(0,0,0,0.15);
+    position: relative;
+    transition: transform 0.3s var(--ease-elastic), box-shadow 0.3s ease;
+  }
+  .wa-float::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--yellow);
+    animation: wa-pulse 2s infinite;
+  }
+  @keyframes wa-pulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.6); opacity: 0; }
+  }
+  .wa-float:hover {
+    transform: scale(1.12) rotate(6deg);
+    box-shadow: 0 12px 32px var(--yellow-glow);
+  }
+
+  .back-to-top {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--black);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    border: 1px solid var(--border-dark);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s var(--ease-out-expo);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .back-to-top:hover {
+    background: var(--yellow);
+    color: var(--black);
+    transform: translateY(-3px);
+  }
+
+  /* ==========================================================================
+     REVEAL ANIMATIONS
+     ========================================================================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stagger-1 { transition-delay: 0.1s; }
+  .stagger-2 { transition-delay: 0.2s; }
+  .stagger-3 { transition-delay: 0.3s; }
+  .stagger-4 { transition-delay: 0.4s; }
+  .stagger-5 { transition-delay: 0.5s; }
+
+  /* ==========================================================================
+     RESPONSIVE
+     ========================================================================== */
+  @media (max-width: 1024px) {
+    .segment-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 540px; margin: 0 auto; }
+    .price-card.featured { transform: none; }
+    .price-card.featured:hover { transform: translateY(-8px); }
+    .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: repeat(3, 1fr); }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .care-inner { grid-template-columns: 1fr; gap: 48px; }
+    .audit-inner { grid-template-columns: 1fr; gap: 48px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 920px) {
+    .nav-links, .nav-status, .nav-cta { display: none; }
+    .nav-toggle { display: flex; }
+    .hero { padding: 140px 0 80px; }
+    .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .process-item { grid-template-columns: 1fr; gap: 10px; }
+    .process-item:hover { padding-left: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 0 20px; }
+    .segment-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .hero-meta { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    section { padding: 85px 0; }
+    .audit-form-container { padding: 26px 20px; }
+    .care-list { grid-template-columns: 1fr; }
+    .floating-controls { bottom: 18px; right: 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .marquee-track, .tech-track { animation: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .word-reveal { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- SCROLL PROGRESS BAR -->
+<div id="scrollProgressBar" aria-hidden="true"></div>
+
+<!-- NAVIGATION BAR -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-center">
+      <a href="#top" class="logo" aria-label="TERL Web Studio Beranda">
+        <div class="logo-box">T</div>
+        <div class="logo-text">TERL<span class="dot">.</span></div>
+      </a>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>Studio Open • <span id="jakartaClock">00:00 WIB</span></span>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#layanan">Layanan</a>
+      <a href="#portfolio">Showcase</a>
+      <a href="#paket">Paket &amp; Harga</a>
+      <a href="#proses">Proses</a>
+      <a href="#care">TERL Care</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="#audit" class="nav-cta">
+        <span>Free Audit</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <div class="mobile-menu-links">
+    <a href="#layanan" class="mobile-link"><span>Layanan</span> <span class="arrow">→</span></a>
+    <a href="#portfolio" class="mobile-link"><span>Showcase</span> <span class="arrow">→</span></a>
+    <a href="#paket" class="mobile-link"><span>Paket &amp; Harga</span> <span class="arrow">→</span></a>
+    <a href="#proses" class="mobile-link"><span>Cara Kerja</span> <span class="arrow">→</span></a>
+    <a href="#care" class="mobile-link"><span>TERL Care</span> <span class="arrow">→</span></a>
+    <a href="#faq" class="mobile-link"><span>FAQ</span> <span class="arrow">→</span></a>
+  </div>
+  <div class="mobile-footer">
+    <a href="#audit" class="btn btn-primary" style="width:100%;">Ajukan Audit Gratis</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-glow-orb" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-badge-row">
+      <div class="eyebrow">
+        <span class="pulse-dot"></span>
+        Professional Websites for People &amp; Business
+      </div>
+      <div class="live-time-chip">
+        ⚡ Fast Delivery: Ready in 72h
+      </div>
+    </div>
+
+    <h1>
+      <span class="word-line"><span class="word-reveal">Build Your</span></span>
+      <span class="word-line"><span class="word-reveal"><span class="accent">Digital Presence.</span></span></span>
+    </h1>
+
+    <p class="hero-sub">TERL Web Studio merancang website design-first dan mobile-first untuk personal brand, UMKM, dan korporat — memastikan bisnis Anda tampil prestisius, dipercaya pelanggan, dan menghasilkan konversi nyata.</p>
+
+    <div class="hero-actions">
+      <a href="#audit" class="btn btn-primary">
+        <span>Ajukan Audit Gratis</span>
+        <span class="icon">→</span>
+      </a>
+      <a href="#portfolio" class="btn btn-outline">
+        <span>Lihat Showcase Proyek</span>
+      </a>
+    </div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <strong><span class="counter" data-target="3">0</span> Jalur</strong>
+        Spesialisasi paket
+      </div>
+      <div class="hero-meta-item">
+        <strong><span class="counter" data-target="72">0</span> Jam</strong>
+        Opsi express launch
+      </div>
+      <div class="hero-meta-item">
+        <strong><span class="counter" data-target="100">0</span>%</strong>
+        Responsive &amp; Mobile-first
+      </div>
+      <div class="hero-meta-item">
+        <strong><span class="counter" data-target="99">0</span>.8%</strong>
+        Client satisfaction rate
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- EQUATION STRIP -->
+<div class="equation">
+  <div class="marquee-track" aria-hidden="true">
+    <div class="marquee-item">
+      <span>WEBSITE</span> <span class="arrow">→</span>
+      <span>PROFESSIONAL IMAGE</span> <span class="arrow">→</span>
+      <span>TRUST</span> <span class="arrow">→</span>
+      <span>HIGH CONVERSION</span> <span class="arrow">→</span>
+      <span style="color:var(--yellow)">EXPONENTIAL SALES</span> <span class="dim">///</span>
+    </div>
+    <div class="marquee-item">
+      <span>WEBSITE</span> <span class="arrow">→</span>
+      <span>PROFESSIONAL IMAGE</span> <span class="arrow">→</span>
+      <span>TRUST</span> <span class="arrow">→</span>
+      <span>HIGH CONVERSION</span> <span class="arrow">→</span>
+      <span style="color:var(--yellow)">EXPONENTIAL SALES</span> <span class="dim">///</span>
+    </div>
+  </div>
+</div>
+
+<!-- TECH TICKER -->
+<div class="tech-ticker">
+  <div class="tech-track" aria-hidden="true">
+    <span class="tech-badge">Next.js &amp; Modern JS</span>
+    <span class="tech-badge">Tailwind CSS</span>
+    <span class="tech-badge">Figma UI/UX</span>
+    <span class="tech-badge">Google Analytics 4</span>
+    <span class="tech-badge">High Performance 95+ PageSpeed</span>
+    <span class="tech-badge">WhatsApp API Integration</span>
+    <span class="tech-badge">Midtrans / Stripe Payment</span>
+    <span class="tech-badge">Next.js &amp; Modern JS</span>
+    <span class="tech-badge">Tailwind CSS</span>
+    <span class="tech-badge">Figma UI/UX</span>
+    <span class="tech-badge">Google Analytics 4</span>
+    <span class="tech-badge">High Performance 95+ PageSpeed</span>
+    <span class="tech-badge">WhatsApp API Integration</span>
+    <span class="tech-badge">Midtrans / Stripe Payment</span>
+  </div>
+</div>
+
+<!-- SEGMENTS / LAYANAN -->
+<section class="segments" id="layanan">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Segmentasi Layanan</div>
+      <h2>Satu studio, tiga arsitektur solusi.</h2>
+      <p>Kami tidak menggunakan template generik. Setiap desain dan struktur halaman dikurasi presisi sesuai persona dan tujuan audiens target Anda.</p>
+    </div>
+
+    <div class="segment-grid">
+      <!-- Card 1 -->
+      <div class="segment-card reveal stagger-1" data-tilt>
+        <div class="segment-icon-box">⚡</div>
+        <div class="segment-num">01 / PERSONAL</div>
+        <h3>Portfolio &amp; Personal Brand</h3>
+        <p>Membangun personal branding yang berwibawa untuk profesional, freelancer, dokter, fotografer, konsultan, dan creator agar unggul di hadapan klien kelas atas.</p>
+        <ul class="segment-deliverables">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Showcase Hasil Karya Interaktif
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Direct WhatsApp / Booking Call
+          </li>
+        </ul>
+        <span class="segment-tag">TERL Personal →</span>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="segment-card reveal stagger-2" data-tilt>
+        <div class="segment-icon-box">🏢</div>
+        <div class="segment-num">02 / BUSINESS</div>
+        <h3>Website Bisnis &amp; UMKM</h3>
+        <p>Mengubah pengunjung menjadi pembeli aktif untuk cafe, barbershop, klinik estetika, bengkel, wedding organizer, properti, dan bisnis jasa lokal.</p>
+        <ul class="segment-deliverables">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Katalog Produk &amp; Google Maps
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Funnel Konversi WhatsApp Otomatis
+          </li>
+        </ul>
+        <span class="segment-tag">TERL Business →</span>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="segment-card reveal stagger-3" data-tilt>
+        <div class="segment-icon-box">🌐</div>
+        <div class="segment-num">03 / COMPANY</div>
+        <h3>Company Profile &amp; Korporasi</h3>
+        <p>Representasi digital tingkat tinggi untuk perseroan, lembaga, yayasan, BEM/organisasi, dan startup yang membutuhkan kredibilitas tanpa kompromi.</p>
+        <ul class="segment-deliverables">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Struktur Legalitas &amp; Visi Misi
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Lead Capture &amp; Security Shield
+          </li>
+        </ul>
+        <span class="segment-tag">TERL Company →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE / PORTFOLIO -->
+<section class="portfolio" id="portfolio">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Hasil Karya Pilihan</div>
+      <h2>Karya nyata, performa terukur.</h2>
+      <p>Setiap proyek kami gabungkan estetika visual kelas dunia dengan kecepatan loading kilat dan struktur konversi tinggi.</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="portfolio-filters reveal">
+      <button class="filter-btn active" data-filter="all">Semua Proyek</button>
+      <button class="filter-btn" data-filter="personal">Personal Brand</button>
+      <button class="filter-btn" data-filter="business">Bisnis &amp; UMKM</button>
+      <button class="filter-btn" data-filter="company">Company Profile</button>
+    </div>
+
+    <div class="portfolio-grid">
+      <!-- Item 1 -->
+      <div class="work-card reveal stagger-1" data-category="business">
+        <div class="work-preview">
+          <div class="browser-frame">
+            <div class="browser-dots">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <div class="browser-content">
+              <span class="mock-badge-tag">Cafe &amp; Resto</span>
+              <div class="mock-header"></div>
+              <div class="mock-text" style="width:75%;"></div>
+              <div class="mock-text" style="width:50%;"></div>
+              <div class="mock-cta"></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-info">
+          <div class="work-category">F&amp;B / Hospitality</div>
+          <h3>Arunika Artisan Roastery</h3>
+          <p>Website interaktif pemesanan biji kopi &amp; reservasi table dengan integrasi menu QR digital.</p>
+          <div class="work-metrics">
+            <span>Result:</span>
+            <span class="metric-val">+310% Order WA</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="work-card reveal stagger-2" data-category="personal">
+        <div class="work-preview">
+          <div class="browser-frame">
+            <div class="browser-dots">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <div class="browser-content">
+              <span class="mock-badge-tag">Creator / Director</span>
+              <div class="mock-header" style="background:#ffd400;width:50%;"></div>
+              <div class="mock-text" style="width:85%;"></div>
+              <div class="mock-text" style="width:60%;"></div>
+              <div class="mock-cta" style="background:var(--black);"></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-info">
+          <div class="work-category">Personal Portfolio</div>
+          <h3>Reza Pratama — Visual Director</h3>
+          <p>Portfolio visual sinematik dengan micro-interactions dinamis dan showcase video 4K responsif.</p>
+          <div class="work-metrics">
+            <span>Result:</span>
+            <span class="metric-val">5 Global Clients</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="work-card reveal stagger-3" data-category="company">
+        <div class="work-preview">
+          <div class="browser-frame">
+            <div class="browser-dots">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <div class="browser-content">
+              <span class="mock-badge-tag">Enterprise / B2B</span>
+              <div class="mock-header" style="width:70%;"></div>
+              <div class="mock-text"></div>
+              <div class="mock-text" style="width:70%;"></div>
+              <div class="mock-cta"></div>
+            </div>
+          </div>
+        </div>
+        <div class="work-info">
+          <div class="work-category">Logistics &amp; Supply Chain</div>
+          <h3>Nusantara Logistik Mandiri</h3>
+          <p>Company profile korporat modern dengan fitur tracking status muatan dan kalkulator estimasi tarif.</p>
+          <div class="work-metrics">
+            <span>Result:</span>
+            <span class="metric-val">100/100 SEO Score</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="paket">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Transparansi Biaya</div>
+      <h2>Investasi jelas, tanpa biaya tersembunyi.</h2>
+      <p>Pilih paket yang sesuai skala bisnis Anda saat ini. Seluruh paket sudah termasuk setup domain, hosting, dan optimasi mobile.</p>
+    </div>
+
+    <!-- Pricing Grid -->
+    <div class="pricing-grid">
+      <!-- Starter -->
+      <div class="price-card reveal stagger-1" data-tilt>
+        <div class="price-name">Terl Starter</div>
+        <h3>Starter</h3>
+        <p style="color:var(--gray-600);font-size:13.5px;">Solusi kilat untuk landing page satu halaman yang fokus konversi.</p>
+        <div class="price-amount-wrapper">
+          <div class="price-amount">Rp799K <small>/ project</small></div>
+        </div>
+        <ul class="price-features">
+          <li><span class="check-icon">✓</span> 1 Halaman High-Conversion</li>
+          <li><span class="check-icon">✓</span> 100% Mobile &amp; Tablet Optimized</li>
+          <li><span class="check-icon">✓</span> Showcase Portfolio / Produk</li>
+          <li><span class="check-icon">✓</span> WhatsApp CTA Form Otomatis</li>
+          <li><span class="check-icon">✓</span> 2x Sesi Revisi Desain</li>
+          <li><span class="check-icon">✓</span> Free Domain .com (1 Tahun)</li>
+        </ul>
+        <a href="#audit" class="price-cta" data-package="Starter">Pilih Starter →</a>
+      </div>
+
+      <!-- Business (Featured) -->
+      <div class="price-card featured reveal stagger-2" data-tilt>
+        <div class="price-badge">Paling Diminati 🔥</div>
+        <div class="price-name">Terl Business</div>
+        <h3>Business Pro</h3>
+        <p style="color:#a1a1aa;font-size:13.5px;">Website multi-halaman komprehensif untuk bisnis &amp; brand berkembang.</p>
+        <div class="price-amount-wrapper">
+          <div class="price-amount">Rp1.499K <small>/ project</small></div>
+        </div>
+        <ul class="price-features">
+          <li><span class="check-icon">✓</span> Hingga 5 Halaman Custom</li>
+          <li><span class="check-icon">✓</span> Custom Interactive UI/UX Design</li>
+          <li><span class="check-icon">✓</span> Integrasi Google Maps &amp; Lokasi</li>
+          <li><span class="check-icon">✓</span> Advanced SEO (On-Page)</li>
+          <li><span class="check-icon">✓</span> Google Analytics 4 &amp; Meta Pixel</li>
+          <li><span class="check-icon">✓</span> 4x Sesi Revisi &amp; Training Admin</li>
+          <li><span class="check-icon">✓</span> 1 Bulan Free TERL Care Support</li>
+        </ul>
+        <a href="#audit" class="price-cta" data-package="Business">Pilih Business Pro →</a>
+      </div>
+
+      <!-- Signature -->
+      <div class="price-card reveal stagger-3" data-tilt>
+        <div class="price-name">Terl Signature</div>
+        <h3>Signature Elite</h3>
+        <p style="color:var(--gray-600);font-size:13.5px;">Custom engineering &amp; arsitektur eksklusif untuk korporat &amp; scale-up.</p>
+        <div class="price-amount-wrapper">
+          <div class="price-amount">Mulai Rp2.999K</div>
+        </div>
+        <ul class="price-features">
+          <li><span class="check-icon">✓</span> Hingga 10+ Halaman Komplit</li>
+          <li><span class="check-icon">✓</span> Bespoke Visual &amp; Motion Design</li>
+          <li><span class="check-icon">✓</span> Professional Copywriting Disusun Tim</li>
+          <li><span class="check-icon">✓</span> Lead Generation CRM Integration</li>
+          <li><span class="check-icon">✓</span> Multi-language Support (ID/EN)</li>
+          <li><span class="check-icon">✓</span> Unlimited Minor Revisions</li>
+          <li><span class="check-icon">✓</span> VIP Dedicated Project Manager</li>
+        </ul>
+        <a href="#audit" class="price-cta" data-package="Signature">Pilih Signature →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY / SELLING POINTS -->
+<section class="why">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Keunggulan TERL</div>
+      <h2>Website bukan sekadar kode teknis.</h2>
+      <p>Website adalah instrumen utama kredibilitas, magnet kepercayaan pelanggan, dan mesin penjualan 24/7 bisnis Anda.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal stagger-1">
+        <div class="why-mark">01</div>
+        <div>
+          <h3>Design-First</h3>
+          <p>Tipografi, hierarki visual, dan layout dirancang eksklusif sesuai karakter unik brand Anda.</p>
+        </div>
+      </div>
+      <div class="why-card reveal stagger-2">
+        <div class="why-mark">02</div>
+        <div>
+          <h3>Mobile-First</h3>
+          <p>85%+ pengunjung mengakses lewat ponsel. Kami pastikan pengalaman mobile super mulus.</p>
+        </div>
+      </div>
+      <div class="why-card reveal stagger-3">
+        <div class="why-mark">03</div>
+        <div>
+          <h3>Fast Launch</h3>
+          <p>Prosedur pengembangan terstandar dengan opsi online dalam 72 jam setelah materi lengkap.</p>
+        </div>
+      </div>
+      <div class="why-card reveal stagger-4">
+        <div class="why-mark">04</div>
+        <div>
+          <h3>High Conversion</h3>
+          <p>Penempatan CTA WhatsApp, form leads, dan navigasi dioptimasi untuk menghasilkan pesan masuk.</p>
+        </div>
+      </div>
+      <div class="why-card reveal stagger-5">
+        <div class="why-mark">05</div>
+        <div>
+          <h3>After-Sales Care</h3>
+          <p>Proyek selesai bukan akhir hubungan. Kami sediakan maintenance berkelanjutan lewat TERL Care.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="proses">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Standar Operasional</div>
+      <h2>6 Tahap terstruktur dari brief hingga live.</h2>
+      <p>Proses transparan dan terukur menjamin timeline tepat waktu tanpa kejutan yang membingungkan.</p>
+    </div>
+
+    <div class="process-list reveal">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <h3>Discovery &amp; Quotation</h3>
+        <p>Konsultasi mendalam memahami target audiens, menentukan sitemap, dan merilis penawaran resmi dengan timeline pasti.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <h3>DP &amp; Content Collection</h3>
+        <p>Pembayaran uang muka dan pengumpulan aset: logo, foto produk, teks penjelasan, serta preferensi warna.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <h3>Wireframe &amp; UI Prototype</h3>
+        <p>Pembuatan sketsa struktur dan preview visual desain interaktif sebelum melangkah ke penulisan kode.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">04</div>
+        <h3>Development &amp; QA Testing</h3>
+        <p>Website dikode secara bersih, dioptimasi kecepatannya, dan diuji menyeluruh di berbagai ukuran layar smartphone &amp; desktop.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">05</div>
+        <h3>Revisi &amp; Official Launch</h3>
+        <p>Penyempurnaan berdasarkan masukan Anda, konfigurasi domain &amp; SSL aktif, lalu rilis online secara resmi.</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">06</div>
+        <h3>Handover &amp; Maintenance</h3>
+        <p>Serah terima seluruh akses kredensial akun, video panduan update konten, dan opsi perawatan rutin TERL Care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Testimoni Klien</div>
+      <h2>Dipercaya oleh para pelaku bisnis visioner.</h2>
+      <p>Inilah yang dikatakan para founder dan profesional setelah mempercayakan transformasi digital mereka ke TERL.</p>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card reveal stagger-1">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">"Sebelumnya website lama kami lambat dan tampilan mobile berantakan. Setelah dirombak total oleh TERL, leads WhatsApp naik lebih dari 3 kali lipat dalam bulan pertama!"</p>
+        </div>
+        <div class="testimonial-client">
+          <div class="client-avatar">DS</div>
+          <div class="client-meta">
+            <h4>Dimas Satrio</h4>
+            <span>Owner, Satrio Auto Detailer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal stagger-2">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">"Desainnya benar-benar clean, modern, dan sangat profesional. Klien luar negeri sekarang langsung percaya saat saya kirimkan link portfolio hasil garapan TERL."</p>
+        </div>
+        <div class="testimonial-client">
+          <div class="client-avatar">NW</div>
+          <div class="client-meta">
+            <h4>Nadia Wijaya</h4>
+            <span>Brand Consultant &amp; Architect</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal stagger-3">
+        <div>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">"Pengerjaan tepat waktu sesuai deadline 72 jam! Komunikasi responsif dan handover akun sangat rapi. Sangat merekomendasikan TERL untuk bisnis yang butuh rilis cepat."</p>
+        </div>
+        <div class="testimonial-client">
+          <div class="client-avatar">AH</div>
+          <div class="client-meta">
+            <h4>Aditya Hidayat</h4>
+            <span>Co-Founder, Solusi Finansial Indo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARE BAND -->
+<section class="care" id="care">
+  <div class="care-glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="care-inner">
+      <div class="reveal">
+        <div class="eyebrow" style="background:rgba(255,255,255,0.06);color:#cfcfd4;border-color:#333;">
+          <span class="pulse-dot"></span> Recurring Support
+        </div>
+        <h2>Website Anda tetap terjaga, aman, dan mutakhir setiap saat.</h2>
+        <p>TERL Care hadir memastikan infrastruktur website bisnis Anda tidak pernah down, terbebas dari ancaman keamanan siber, dan selalu siap menerima traffic baru tanpa Anda pusing memikirkannya.</p>
+        <ul class="care-list">
+          <li>Update konten berkala</li>
+          <li>Cloud Backup mingguan otomatis</li>
+          <li>Security check &amp; Anti-malware</li>
+          <li>Plugin &amp; Framework update</li>
+          <li>Revisi minor bulanan</li>
+          <li>Priority WhatsApp technical support</li>
+        </ul>
+      </div>
+
+      <div class="care-price reveal stagger-2" data-tilt>
+        <div class="price-name">Terl Care Routine</div>
+        <h3 style="font-size:24px;font-weight:700;margin-bottom:6px;">Maintenance Terjadwal</h3>
+        <div class="price-amount">Rp199K <small>/ bulan</small></div>
+        <p style="color:#a1a1aa;font-size:14px;line-height:1.6;margin-bottom:28px;">Solusi hemat &amp; tenang untuk website yang sudah live tanpa ikatan kontrak jangka panjang. Berhenti kapan saja.</p>
+        <a href="#audit" class="btn btn-primary" style="width:100%;background:var(--yellow);color:var(--black);border-color:var(--yellow);" data-package="TERL Care">
+          <span>Mulai Langganan TERL Care</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow"><span class="pulse-dot"></span> Tanya Jawab</div>
+      <h2>Pertanyaan yang sering diajukan.</h2>
+      <p>Punya pertanyaan spesifik sebelum memulai proyek? Temukan jawabannya di bawah ini.</p>
+    </div>
+
+    <div class="faq-list reveal">
+      <div class="faq-item active">
+        <button class="faq-question">
+          <span>Berapa lama proses pembuatan website dari awal sampai live?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Untuk paket <strong>Starter</strong> dapat selesai dalam <strong>72 Jam (3 hari kerja)</strong> setelah materi lengkap kami terima. Paket <strong>Business</strong> rata-rata memerlukan 5–7 hari kerja, dan paket <strong>Signature</strong> membutuhkan 10–14 hari kerja tergantung kompleksitas fitur yang diminta.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Apakah saya sudah mendapatkan domain dan hosting sendiri?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Ya, seluruh paket kami sudah termasuk biaya pendaftaran <strong>domain (.com / .id / .my.id)</strong> serta hosting berkecepatan tinggi selama 1 tahun pertama gratis. Di tahun berikutnya Anda cukup memperpanjang biaya perpanjangan standar.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Bagaimana jika saya belum memiliki materi teks atau foto profesional?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Jangan khawatir! Tim copywriter kami akan memandu Anda melalui kuesioner ringkas dan membantu menyusun teks copywriting yang memikat. Kami juga menyediakan kurasi foto stok resolusi tinggi yang relevan dengan industri Anda.
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Apakah websitenya nanti mudah diubah atau diupdate sendiri?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            Sangat mudah! Setelah rilis, kami akan menyertakan video tutorial singkat langkah demi langkah untuk mengedit teks, mengganti foto, maupun memperbarui nomor kontak tanpa perlu mengerti coding.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT / CONTACT -->
+<section class="audit" id="audit">
+  <div class="wrap">
+    <div class="audit-inner">
+      <div class="audit-copy reveal">
+        <div class="eyebrow"><span class="pulse-dot"></span> Free Digital Presence Audit</div>
+        <h2>Kami audit presence digital Anda, 100% Gratis.</h2>
+        <p>Kirimkan informasi singkat tentang bisnis Anda saat ini. Tim ahli TERL akan menganalisis dan mengirimkan 3 temuan perbaikan konkret dalam waktu 1x24 jam tanpa dipungut biaya apapun.</p>
+        
+        <div class="audit-steps">
+          <div class="audit-step-item">
+            <span class="step-num">01</span>
+            <div><strong>Isi Formulir Ringkas</strong> — Lengkapi nama bisnis dan kontak WhatsApp Anda di samping.</div>
+          </div>
+          <div class="audit-step-item">
+            <span class="step-num">02</span>
+            <div><strong>Analisis Tim Senior</strong> — Kami tinjau kecepatan, UI/UX, dan peluang konversi Anda.</div>
+          </div>
+          <div class="audit-step-item">
+            <span class="step-num">03</span>
+            <div><strong>Terima Laporan &amp; Solusi</strong> — Dapatkan 3 rekomendasi actionable via WhatsApp.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Form -->
+      <div class="audit-form-container reveal stagger-2">
+        <h3>Ajukan Audit Gratis Sekarang</h3>
+        <form id="auditForm">
+          <div class="field">
+            <label for="name">Nama Lengkap</label>
+            <input type="text" id="name" name="name" placeholder="Misal: Budi Santoso" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="business">Nama Bisnis / Brand</label>
+            <input type="text" id="business" name="business" placeholder="Misal: Artisan Coffee Senja" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="segment">Pilihan Kategori / Paket</label>
+            <select id="segment" name="segment">
+              <option value="Personal Brand">Personal Brand / Portfolio</option>
+              <option value="Business UMKM" selected>Website Bisnis &amp; UMKM</option>
+              <option value="Company Profile">Company Profile Korporasi</option>
+              <option value="Paket Starter">Paket Starter (Rp799K)</option>
+              <option value="Paket Business">Paket Business Pro (Rp1.499K)</option>
+              <option value="Paket Signature">Paket Signature (Rp2.999K)</option>
+              <option value="TERL Care">Langganan TERL Care (Rp199K/bln)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="whatsapp">Nomor WhatsApp Aktif</label>
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder="08xxxxxxxxxx" required autocomplete="tel">
+          </div>
+          <button type="submit" class="btn btn-primary" id="submitBtn">
+            <span>Kirim &amp; Hubungi via WhatsApp</span>
+            <span>⚡</span>
+          </button>
+          <p class="form-note">🔒 Privasi Anda terjaga. Data hanya dipakai untuk mengirimkan hasil audit gratis ini.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo" style="color:var(--white);">
+          <div class="logo-box">T</div>
+          <div class="logo-text">TERL<span class="dot">.</span></div>
+        </a>
+        <p>Professional Websites for People &amp; Business. Build Your Digital Presence.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Layanan</h4>
+        <ul>
+          <li><a href="#layanan">TERL Personal</a></li>
+          <li><a href="#layanan">TERL Business</a></li>
+          <li><a href="#layanan">TERL Signature</a></li>
+          <li><a href="#care">TERL Care Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Studio</h4>
+        <ul>
+          <li><a href="#portfolio">Showcase Proyek</a></li>
+          <li><a href="#proses">Alur Kerja</a></li>
+          <li><a href="#paket">Paket &amp; Harga</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontak Cepat</h4>
+        <ul>
+          <li><a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp Resmi →</a></li>
+          <li><a href="mailto:hello@terlwebstudio.com">hello@terlwebstudio.com</a></li>
+          <li><a href="https://instagram.com/terlwebstudio" target="_blank" rel="noopener">Instagram Studio</a></li>
+          <li><a href="#audit">Ajukan Audit Gratis</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TERL Web Studio. Seluruh Hak Cipta Dilindungi.</span>
+      <span style="font-family:var(--font-mono);color:var(--yellow);">Designed &amp; Engineered with Precision.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CONTROLS (WHATSAPP & BACK TO TOP) -->
+<div class="floating-controls" aria-label="Aksi Cepat">
+  <div class="wa-bubble-popup" id="waBubble">
+    <span class="status-dot"></span>
+    <span>Butuh konsultasi kilat? Chat kami sekarang!</span>
+  </div>
+  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <a href="https://wa.me/6281234567890?text=Halo%20TERL%20Web%20Studio,%20saya%20tertarik%20konsultasi%20pembuatan%20website" target="_blank" rel="noopener" class="wa-float" id="waFloatBtn" aria-label="Chat WhatsApp Admin">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1H12a7.94 7.94 0 0 0 7.94-7.94 7.87 7.87 0 0 0-2.34-5.64ZM12.05 18.4a6.6 6.6 0 0 1-3.37-.93l-.24-.14-2.5.65.66-2.43-.16-.25a6.6 6.6 0 1 1 12.26-3.5 6.6 6.6 0 0 1-6.65 6.6Zm3.6-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.32-.1-.45.1-.13.19-.51.64-.63.78-.11.13-.23.15-.43.05-.2-.1-.83-.31-1.58-.98a5.9 5.9 0 0 1-1.1-1.36c-.11-.2 0-.3.1-.4.1-.1.2-.24.31-.36.1-.12.13-.2.2-.34.06-.13.03-.25-.02-.35-.05-.1-.45-1.08-.61-1.48-.16-.39-.33-.33-.45-.34h-.38c-.13 0-.35.05-.53.25-.18.19-.7.68-.7 1.66s.72 1.92.82 2.06c.1.13 1.42 2.17 3.44 3.04.48.2.86.33 1.15.42.48.15.92.13 1.27.08.39-.06 1.17-.48 1.34-.94.16-.46.16-.85.11-.94-.05-.09-.18-.14-.38-.24Z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ==========================================================================
+     INTERACTIVE JAVASCRIPT & MOTION CONTROLLERS
+     ========================================================================== -->
+<script>
+  // 1. Live Jakarta Clock (WIB)
+  function updateJakartaClock() {
+    const clockEl = document.getElementById('jakartaClock');
+    if (!clockEl) return;
+    const now = new Date();
+    const options = { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', hour12: false };
+    const timeStr = new Intl.DateTimeFormat('en-GB', options).format(now);
+    clockEl.textContent = `${timeStr} WIB`;
+  }
+  updateJakartaClock();
+  setInterval(updateJakartaClock, 10000);
+
+  // 2. Reading Scroll Progress Bar & Sticky Nav
+  const progressBar = document.getElementById('scrollProgressBar');
+  const nav = document.getElementById('nav');
+  const backToTop = document.getElementById('backToTop');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section, header');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    if (progressBar) progressBar.style.width = `${progress}%`;
+
+    // Sticky Nav Glass Effect
+    if (nav) nav.classList.toggle('scrolled', scrollTop > 25);
+
+    // Back to Top visibility
+    if (backToTop) backToTop.classList.toggle('visible', scrollTop > 450);
+
+    // Active Section Tracking
+    let currentSection = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (scrollTop >= sectionTop) {
+        currentSection = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${currentSection}`) {
+        link.classList.add('active');
+      }
+    });
+  }, { passive: true });
+
+  // Back to Top Click
+  if (backToTop) {
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // 3. Mobile Navigation Toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navToggle.classList.toggle('open');
+      mobileMenu.classList.toggle('open', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  // 4. Staggered Scroll Reveal with IntersectionObserver
+  const revealElements = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  // 5. Dynamic Stats Number Counter Animation
+  const counters = document.querySelectorAll('.counter');
+  let countersStarted = false;
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersStarted) {
+        countersStarted = true;
+        counters.forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          const duration = 1600; // ms
+          const stepTime = 20;
+          const totalSteps = duration / stepTime;
+          const increment = target / totalSteps;
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              counter.textContent = target;
+              clearInterval(timer);
+            } else {
+              counter.textContent = Math.floor(current);
+            }
+          }, stepTime);
+        });
+      }
+    });
+  }, { threshold: 0.2 });
+
+  if (counters.length > 0) {
+    counterObserver.observe(counters[0].closest('.hero-meta'));
+  }
+
+  // 6. Interactive 3D Card Tilt Effect (Subtle & Fluid)
+  if (window.matchMedia('(hover: hover)').matches) {
+    const tiltCards = document.querySelectorAll('[data-tilt]');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  // 7. Portfolio Showcase Filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const workCards = document.querySelectorAll('.work-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+      workCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'flex';
+          setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, 50);
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            card.style.display = 'none';
+          }, 250);
+        }
+      });
+    });
+  });
+
+  // 8. FAQ Accordion Interaction
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      faqItems.forEach(i => i.classList.remove('active'));
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    });
+  });
+
+  // 9. Pricing CTA Auto-Select in Audit Form
+  const priceCtas = document.querySelectorAll('.price-cta, .btn[data-package]');
+  const segmentSelect = document.getElementById('segment');
+  priceCtas.forEach(cta => {
+    cta.addEventListener('click', () => {
+      const pkg = cta.getAttribute('data-package');
+      if (pkg && segmentSelect) {
+        for (let i = 0; i < segmentSelect.options.length; i++) {
+          if (segmentSelect.options[i].text.includes(pkg) || segmentSelect.options[i].value.includes(pkg)) {
+            segmentSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    });
+  });
+
+  // 10. Audit Form -> WhatsApp Auto-Handoff with Formatting
+  const form = document.getElementById('auditForm');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const business = document.getElementById('business').value.trim();
+      const segment = document.getElementById('segment').value;
+      const wa = document.getElementById('whatsapp').value.trim();
+
+      const message =
+        `Halo TERL Web Studio 👋\n\n` +
+        `Saya ingin mengajukan *Free Digital Presence Audit*:\n` +
+        `• *Nama:* ${name}\n` +
+        (business ? `• *Bisnis:* ${business}\n` : '') +
+        `• *Kategori/Paket:* ${segment}\n` +
+        `• *WhatsApp:* ${wa}\n\n` +
+        `Mohon info ketersediaan slot & analisis singkatnya. Terima kasih!`;
+
+      const url = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    });
+  }
+
+  // 11. WhatsApp Bubble Greeting Popup after 3.5 seconds
+  const waBubble = document.getElementById('waBubble');
+  if (waBubble) {
+    setTimeout(() => {
+      waBubble.classList.add('show');
+      setTimeout(() => {
+        waBubble.classList.remove('show');
+      }, 7000);
+    }, 3500);
+  }
+</script>
+
+</body>
+</html>
