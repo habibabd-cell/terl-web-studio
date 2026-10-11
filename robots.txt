@@ -1,0 +1,5 @@
+# robots.txt for TERL Web Studio
+User-agent: *
+Allow: /
+
+Sitemap: https://terlwebstudio.com/sitemap.xml
